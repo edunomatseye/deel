@@ -16,7 +16,7 @@ class DepositService {
         this.profileRepo.findByPk(clientId),
       ]);
 
-      if (amount < total * 0.25) {
+      if (amount <= total * 0.25) {
         //Check if the client object exists and has a balance property
         if (client && client.balance !== undefined) {
           client.balance += amount;

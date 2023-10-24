@@ -22,7 +22,7 @@ describe("DepositService", () => {
 
   it("should deposit if the amount is less than 25% of total jobs cost", async () => {
     const clientId = 1;
-    const amount = 99;
+    const amount = 100;
     const totalJobsCost = 400; // Mocked total jobs cost
 
     depositService.jobRepo.getTotalJobsCost.mockResolvedValue(totalJobsCost);
@@ -32,15 +32,15 @@ describe("DepositService", () => {
 
     // Check if the balance is updated correctly
     expect(depositService.profileRepo.update).toHaveBeenCalledWith(
-      { id: clientId, balance: 99 },
+      { id: clientId, balance: 100 },
       { where: { id: clientId } }
     );
   });
 
   it("should throw an error if the amount is not less than 25% of total jobs cost", async () => {
     const clientId = 1;
-    const amount = 100;
-    const totalJobsCost = 200; // Mocked total jobs cost
+    const amount = 101;
+    const totalJobsCost = 400; // Mocked total jobs cost
 
     depositService.jobRepo.getTotalJobsCost.mockResolvedValue(totalJobsCost);
 
