@@ -1,8 +1,12 @@
-const Sequelize = require('sequelize');
+const createNamespace = require('cls-hooked').createNamespace;
+const {Sequelize, Transaction} = require('sequelize');
 
+const session = createNamespace('deel transactions');
+Sequelize.useCLS(session);
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite3'
+  storage: './database.sqlite3',
+  isolationLevel: Transaction.ISOLATION_LEVELS.SERIALIZABLE
 });
 
 class Profile extends Sequelize.Model {}
@@ -84,6 +88,7 @@ Job.belongsTo(Contract)
 
 module.exports = {
   sequelize,
+  Transaction,
   Profile,
   Contract,
   Job
