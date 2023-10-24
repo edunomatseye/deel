@@ -54,7 +54,7 @@ class JobsRepository {
     return Job.findOne(query);
   }
 
-  async getTotalJobsCost(clientId) {
+  async getTotalJobsCost(clientId, transaction) {
     const query = {
       where: {
         paid: { [Op.is]: null },
@@ -81,7 +81,7 @@ class JobsRepository {
       raw: true,
     };
 
-    return Job.findOne(query);
+    return Job.findOne(query, { lock: true, transaction });
   }
 
   async getUnpaidJobs(profileId) {
@@ -104,7 +104,7 @@ class JobsRepository {
     return Job.findAll(query);
   }
 
-  async getJob(id) {
+  async getJob(id, transaction) {
     const query = {
       where: {
         id,
@@ -130,7 +130,7 @@ class JobsRepository {
       ],
     };
 
-    return Job.findOne(query);
+    return Job.findOne(query, { lock: true, transaction });
   }
 }
 
