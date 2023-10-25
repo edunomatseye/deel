@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { getBestProfession, getBestClients } = require("./controllers/jobsController");
 
-router.get("/best-profession", getBestProfession);
-router.get("/best-clients", getBestClients);
+const { getBestProfession, getBestClients } = require("./controller/jobs");
+const { makeClientDeposit } = require("./controller/balance");
 
-module.exports = router;
+router.get("/admin/best-profession", getBestProfession);
+router.get("/admin/best-clients", getBestClients);
+router.post("/balances/deposit/:clientId", makeClientDeposit)
+
+module.exports = { appRouter: router };

@@ -19,6 +19,11 @@ class JobsRepository {
               as: "Client",
               attributes: [],
             },
+            {
+              model: Profile,
+              as: "Contractor",
+              attributes: [],
+            },
           ],
         },
       ],

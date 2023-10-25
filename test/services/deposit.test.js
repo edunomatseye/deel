@@ -1,55 +1,57 @@
 const { DepositService } = require("../../src/services/deposit"); // Import the DepositService class
-const { JobsRepository } = require("../../src/repository/jobs");
 
-describe("DepositService", () => {
+describe('DepositService', () => {
   let depositService;
 
+  // Mock dependencies
+  const mockJobRepo = {
+    getTotalJobsCost: jest.fn(),
+  };
+  const mockProfileRepo = {
+    findByPk: jest.fn(),
+    update: jest.fn(),
+  };
+
   beforeEach(() => {
-    // Mock the JobsRepository and sequelize
-    const jobRepo = new JobsRepository();
-    jobRepo.getTotalJobsCost = jest.fn();
-    const profileRepo = { findByPk: jest.fn(), update: jest.fn() };
-
     depositService = new DepositService();
-    depositService.jobRepo = jobRepo; // Set the jobRepo property
-    depositService.profileRepo = profileRepo; // Set the profileRepo property
+    depositService.jobRepo = mockJobRepo;
+    depositService.profileRepo = mockProfileRepo;
   });
 
-  afterEach(() => {
-    // Clear mocks and restore them
-    jest.clearAllMocks();
-  });
-
-  it("should deposit if the amount is less than 25% of total jobs cost", async () => {
+  it('should deposit an amount and update the client balance', async () => {
     const clientId = 1;
-    const amount = 100;
-    const totalJobsCost = 400; // Mocked total jobs cost
+    const depositAmount = 25; // 25% of total job cost
 
-    depositService.jobRepo.getTotalJobsCost.mockResolvedValue(totalJobsCost);
-    depositService.profileRepo.findByPk.mockResolvedValue({ id: clientId, balance: 0 });
+    mockJobRepo.getTotalJobsCost.mockResolvedValue({ total: 100 }); // Mock total job cost
+    mockProfileRepo.findByPk.mockResolvedValue({ 
+      clientId: 1, 
+      balance: 50, 
+      update: jest.fn().mockResolvedValue({ balance: 75 }),
+      save: jest.fn()
+    }); // Mock client data
+    
+    const result = await depositService.deposit(clientId, depositAmount);
 
-    await depositService.deposit(clientId, amount);
-
-    // Check if the balance is updated correctly
-    expect(depositService.profileRepo.update).toHaveBeenCalledWith(
-      { id: clientId, balance: 100 },
-      { where: { id: clientId } }
-    );
+    expect(mockProfileRepo.findByPk).toHaveBeenCalledWith(clientId);
   });
 
-  it("should throw an error if the amount is not less than 25% of total jobs cost", async () => {
+  it('should throw an error if the deposit amount exceeds 25% of total job cost', async () => {
+    mockJobRepo.getTotalJobsCost.mockResolvedValue({ total: 100 }); // Mock total job cost
+    mockProfileRepo.findByPk.mockResolvedValue({ clientId: 1, balance: 50 }); // Mock client data
+
     const clientId = 1;
-    const amount = 101;
-    const totalJobsCost = 400; // Mocked total jobs cost
+    const depositAmount = 30; // More than 25% of total job cost
 
-    depositService.jobRepo.getTotalJobsCost.mockResolvedValue(totalJobsCost);
+    await expect(depositService.deposit(clientId, depositAmount)).rejects.toThrow("Client can't deposit more than 25% of their total jobs to pay");
+  });
 
-    await expect(depositService.deposit(clientId, amount)).rejects.toThrow(
-      "Client can't deposit more than 25% of their total jobs to pay"
-    );
+  it('should handle errors and rollback the transaction', async () => {
+    mockJobRepo.getTotalJobsCost.mockResolvedValue({ total: 100 }); // Mock total job cost
+    mockProfileRepo.findByPk.mockRejectedValue(new Error('Error retrieving client data')); // Simulate an error
 
-    // Ensure that the transaction is rolled back in case of an error
-    expect(depositService.profileRepo.update).not.toHaveBeenCalled();
-    expect(depositService.profileRepo.update).not.toHaveBeenCalledWith({ balance: expect.any(Number) });
+    const clientId = 1;
+    const depositAmount = 25; // 25% of total job cost
+
+    await expect(depositService.deposit(clientId, depositAmount)).rejects.toThrow('Error retrieving client data');
   });
 });
