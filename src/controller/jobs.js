@@ -40,8 +40,6 @@ async function getAllUnpaidJob(req, res) {
 
 async function makePaymentForJobDone (req, res, next) {
   const { job_id } = req.params;
-console.log(job_id);
-
   try {
     await paymentsService.pay(job_id);
 
