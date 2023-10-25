@@ -1,4 +1,5 @@
 const { Contract } = require("../model");
+const { Op } = require("sequelize");
 
 class ContractsRepository {
   async listNonTerminatedContracts(profileId) {
@@ -24,4 +25,4 @@ class ContractsRepository {
   }
 }
 
-module.exports = { ContractsRepository };
+module.exports = ContractsRepository;

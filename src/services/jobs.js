@@ -12,6 +12,10 @@ class JobsService {
   async findBestProfession(start, end) {
     return this.jobsRepository.findBestProfession(start, end);
   }
+
+  async getUnpaidJobs(profileId) {
+    return this.jobsRepository.getUnpaidJobs(profileId);
+  }
 }
 
 module.exports = JobsService;
