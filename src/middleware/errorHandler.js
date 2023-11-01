@@ -1,5 +1,5 @@
 const errorHandler = (err, req, res, next) => {
-    console.log("Middleware Error Hadnling");
+    console.log("Error Hadnling");
 
     if (res.headersSent) {
         return next(err)

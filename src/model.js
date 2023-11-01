@@ -6,7 +6,8 @@ Sequelize.useCLS(session);
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite3'
+  storage: './database.sqlite3',
+  
 });
 
 class Profile extends Model {}

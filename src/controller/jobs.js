@@ -1,10 +1,10 @@
 const JobsService = require("../services/jobs");
-const PaymentsService = require("../services/payment");
+const { PaymentService } = require('../services/payment');
 const { getFullName } = require('../utils/getFullName');
 
 
 const jobsService = new JobsService();
-const paymentsService = new PaymentsService();
+const paymentsService = new PaymentService();
 
 
 async function getBestProfession(req, res) {

@@ -8,7 +8,8 @@ async function getContractsById (req, res) {
     const {id} = req.params
 
     const contract = await Contract.findOne({where: {id}})
-    if(!contract) return res.status(404).end()
+    console.log('id', id)
+    if(!contract) return res.status(404).json({ error: 'contract not found' })
     if(contract.ClientId !== req.profile.id && contract.ContractorId !== req.profile.id) { 
         return res.sendStatus(403);
     }
