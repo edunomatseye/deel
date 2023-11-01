@@ -5,8 +5,7 @@ class ContractsService {
   }
 
   async getContractList(profileId) {
-    const contracts = await this.contractsRepository.listNonTerminatedContracts(profileId);
-    return contracts.map(contract => contract)
+    return this.contractsRepository.listNonTerminatedContracts(profileId);
   }
 
 }
