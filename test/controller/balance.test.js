@@ -1,4 +1,4 @@
-const { makeClientDeposit } = require('../../src/controller/balance'); // Replace with your actual controller file
+const { makeClientDeposit } = require('../../src/controller/balance');
 const { DepositService } = require('../../src/services/deposit');
 jest.mock('../../src/services/deposit');
 
