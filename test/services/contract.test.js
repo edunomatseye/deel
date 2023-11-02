@@ -10,7 +10,7 @@ describe('ContractsService', () => {
     it('should return a list of non-terminated contracts', async () => {
       // Arrange
       const profileId = 1;
-      const expectedContracts = [{ id: 1, name: 'Contract 1' }];
+      const expectedContracts = [{ id: 1, profileId: 1, name: 'Contract 1' }, { id: 2, profileId: 1, name: 'Contract 2' }];
       ContractsRepository.prototype.listNonTerminatedContracts.mockResolvedValue(expectedContracts);
 
       // Act
