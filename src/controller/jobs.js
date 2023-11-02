@@ -34,7 +34,7 @@ async function getAllUnpaidJob(req, res) {
         const jobs = await jobsService.getUnpaidJobs(req.profile.id);
         res.json(jobs);
     } catch (err) {
-        res.send(401).json({ message: err.message });
+        res.status(401).json({ message: err.message });
     }
 }
 
