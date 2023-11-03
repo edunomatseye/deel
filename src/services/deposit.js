@@ -22,13 +22,12 @@ class DepositService {
           const newBalance = Number(client.balance) + Number(amount);
           await client.update({ balance: newBalance });
           await client.save();
-
-          return client.balance;
       } else {
         throw new Error("Client can't deposit more than 25% of their total jobs to pay");
       }
 
       await transaction.commit();
+      return client.balance;
     } catch (err) {
       await transaction.rollback();
       throw err;
