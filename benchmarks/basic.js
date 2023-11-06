@@ -10,14 +10,14 @@ function startBench() {
 
   const instance = autocannon(
     {
-      title: 'Deel concurrent connections',
+      title: "Deel concurrent connections",
       url,
       connections,
       duration: 10,
       maxConnectionRequests,
       headers: {
         "content-type": "application/json",
-        "profile_id": "3",
+        profile_id: "3",
       },
       requests: [
         {
@@ -26,7 +26,7 @@ function startBench() {
         },
       ],
     },
-    finishedBench
+    finishedBench,
   );
 
   autocannon.track(instance);

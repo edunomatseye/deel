@@ -1,11 +1,9 @@
 const JobsService = require("../services/jobs");
-const { PaymentService } = require('../services/payment');
-const { getFullName } = require('../utils/getFullName');
-
+const { PaymentService } = require("../services/payment");
+const { getFullName } = require("../utils/getFullName");
 
 const jobsService = new JobsService();
 const paymentsService = new PaymentService();
-
 
 async function getBestProfession(req, res) {
   const { start, end } = req.query;
@@ -28,26 +26,31 @@ async function getBestClients(req, res) {
 }
 
 async function getAllUnpaidJob(req, res) {
-    const userId = req.profile.id;
+  const userId = req.profile.id;
 
-    try {
-        const jobs = await jobsService.getUnpaidJobs(req.profile.id);
-        res.json(jobs);
-    } catch (err) {
-        res.status(401).json({ message: err.message });
-    }
+  try {
+    const jobs = await jobsService.getUnpaidJobs(req.profile.id);
+    res.json(jobs);
+  } catch (err) {
+    res.status(401).json({ message: err.message });
+  }
 }
 
-async function makePaymentForJobDone (req, res, next) {
+async function makePaymentForJobDone(req, res, next) {
   const { job_id } = req.params;
   try {
     await paymentsService.pay(job_id);
 
-    res.status(200).json({ message: 'Job Paid successfully' });
+    res.status(200).json({ message: "Job Paid successfully" });
   } catch (err) {
     res.status(401).json({ status: err.message });
     next(err);
   }
 }
 
-module.exports = { getBestProfession, getBestClients, getAllUnpaidJob, makePaymentForJobDone };
+module.exports = {
+  getBestProfession,
+  getBestClients,
+  getAllUnpaidJob,
+  makePaymentForJobDone,
+};

@@ -82,6 +82,8 @@ describe("PaymentService", () => {
 
     paymentService.jobRepo.getJob.mockResolvedValue(job);
 
-    await expect(paymentService.pay(jobId)).rejects.toThrow("The Client balance is not enough");
+    await expect(paymentService.pay(jobId)).rejects.toThrow(
+      "The Client balance is not enough",
+    );
   });
 });

@@ -7,4 +7,4 @@ function getFullName(data) {
   };
 }
 
-module.exports = { getFullName }
+module.exports = { getFullName };

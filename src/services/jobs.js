@@ -2,7 +2,7 @@ const { JobsRepository } = require("../repository/jobs");
 
 class JobsService {
   constructor() {
-    this.jobsRepository= new JobsRepository();
+    this.jobsRepository = new JobsRepository();
   }
 
   async findBestPayingClients(start, end, limit) {

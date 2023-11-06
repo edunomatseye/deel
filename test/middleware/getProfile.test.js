@@ -22,7 +22,9 @@ describe("Middleware getProfile", () => {
 
   it("should return 401 if profile is not in the database", async () => {
     jest.spyOn(Profile, "findOne").mockResolvedValue(null);
-    const response = await request(server).get("/contracts/1").set("profile_id", "1");
+    const response = await request(server)
+      .get("/contracts/1")
+      .set("profile_id", "1");
 
     expect(response.status).toBe(401);
   });

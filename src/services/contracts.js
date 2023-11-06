@@ -7,7 +7,6 @@ class ContractsService {
   async getContractList(profileId) {
     return this.contractsRepository.listNonTerminatedContracts(profileId);
   }
-
 }
 
 module.exports = ContractsService;
