@@ -13,19 +13,19 @@ describe("Middleware getProfile", () => {
     server.close(done);
   });
 
-  it("should return 401 if profile is not set in the header", async () => {
+  it("should return 404 if profile is not set in the header", async () => {
     jest.spyOn(Profile, "findOne").mockResolvedValue(null);
-    const response = await request(server).get("/contracts/1");
+    const response = await request(server).get("/");
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(404);
+    expect(response.body).toStrictEqual({ error: `Profile not found!` });
   });
 
-  it("should return 401 if profile is not in the database", async () => {
+  it("should return 404 if profile is not in the database", async () => {
     jest.spyOn(Profile, "findOne").mockResolvedValue(null);
-    const response = await request(server)
-      .get("/contracts/1")
-      .set("profile_id", "1");
+    const response = await request(server).get("/").set("profile_id", "1");
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(404);
+    expect(response.body).toStrictEqual({ error: `Profile not found!` });
   });
 });
