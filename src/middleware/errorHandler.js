@@ -1,5 +1,5 @@
 const errorHandler = (err, req, res, next) => {
-  console.log("Error Hadnling");
+  console.log("Error Handling Request");
 
   if (res.headersSent) {
     return next(err);
