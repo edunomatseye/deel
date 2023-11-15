@@ -13,6 +13,7 @@ describe("ContractsService", () => {
       const expectedContracts = [
         { id: 1, profileId: 1, name: "Contract 1" },
         { id: 2, profileId: 1, name: "Contract 2" },
+        { id: 3, profileId: 3, name: "Contract 3" },
       ];
       ContractsRepository.prototype.listNonTerminatedContracts.mockResolvedValue(
         expectedContracts,
