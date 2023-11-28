@@ -1,3 +1,4 @@
 brew install minikube // Kubernetes installation
 
 this installation comes with docker and kubectl installed.
+minikube start -vm hyperkite // start the orchestration with the hypervisor
