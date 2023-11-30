@@ -5,3 +5,4 @@ minikube start -vm hyperkite // start the orchestration with the hypervisor
 kubectl create deployment nginx-depl --image=nginx // create the deployment(container) from nginx image.
 kubectl exec -it nginx-depl bin/bash 
 kubectl get  service // shows all the service available
+Amazon EKS control tool - Amazon Elastic Kubernetes Service. 
