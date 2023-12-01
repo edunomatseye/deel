@@ -6,3 +6,5 @@ kubectl create deployment nginx-depl --image=nginx // create the deployment(cont
 kubectl exec -it nginx-depl bin/bash 
 kubectl get  service // shows all the service available
 Amazon EKS control tool - Amazon Elastic Kubernetes Service. 
+
+docker build -t my-app:1.0 
