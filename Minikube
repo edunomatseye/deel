@@ -18,3 +18,11 @@ function groupOptions() {
         select: (data) => data.length,
     })
 }
+
+//useInfiniteQuery
+useInfiniteQuery({
+    queryKey: ["projects"],
+    queryFn: async({queryKey, pageParam}) => await fetch(`/api/projects/?cursor=${pageParam}`).then(response => response.json()),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => lastPage.nextCursor
+})
