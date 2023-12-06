@@ -30,7 +30,7 @@ useInfiniteQuery({
 //SSR using react query 
 
 //setup _app.js 
-import { ReactQueryProvider, QueryClient, HydrationBoundary } from "@tanstack/react-query";
+import { QueryClientProvider, QueryClient, HydrationBoundary } from "@tanstack/react-query";
 
 export default function MyApp({Component, pageProps}) {
     const [qc] = React.useState(() => new QueryClient({
@@ -43,11 +43,11 @@ export default function MyApp({Component, pageProps}) {
         mutationOptions: {}
     }))
     return (
-        <ReactQueryProvider client={qc}>
+        <QueryClientProvider client={qc}>
             <HydrationBoundary client={dehydrate(qc)}>
                 <Component {...pageProps} />
             </HydrationBoundary>
-        </ReactQueryProvider>
+        </QueryClientProvider>
     )
 }
 
@@ -90,3 +90,15 @@ export default function TaskRoute({ dehydratedState }) {
         </HydrationBoundary>
     )
 }
+
+//customHook testing 
+import { waitFor, renderHook } from '@testing-library/react'
+
+const wrapper = ({ Component, pageProps, children }) => {
+    <QueryClientProvider client={qc}>
+        <Component {...pageProps} /> {children} <Outlet />
+    </QueryClientProvider>
+}
+const { result } = renderHook(() => customHook(), { wrapper })
+await waitFor(() => expect(result.current.isSuccess).tobe(true))
+expect(result.current.data).toEqual('Hello')
