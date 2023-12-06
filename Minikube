@@ -26,3 +26,27 @@ useInfiniteQuery({
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => lastPage.nextCursor
 })
+
+//SSR using react query 
+
+//setup _app.js 
+import { ReactQueryProvider, QueryClient, HydrationBoundary } from "@tanstack/react-query";
+
+export default function MyApp({Component, pageProps}) {
+    const [qc] = React.useState(() => new QueryClient({
+        defaultOptions: {
+            queries: {
+                staleTime: 5 * 1000
+            }
+        },
+        queryOptions: {},
+        mutationOptions: {}
+    }))
+    return (
+        <ReactQueryProvider client={qc}>
+            <HydrationBoundary client={dehydrate(qc)}>
+                <Component {...pageProps} />
+            </HydrationBoundary>
+        </ReactQueryProvider>
+    )
+}
