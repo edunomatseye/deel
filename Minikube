@@ -70,7 +70,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-export default async function Tasks() {
+function Tasks() {
     const { data } = useQuery({ queryKey: ["project", "tasks"], queryFn: getProjectTasks})
     const { data: comments } = useQuery({ queryKey: ["project", "comments"], queryFn: getProjectTaskCommnet})
 
@@ -79,5 +79,14 @@ export default async function Tasks() {
             {data.project.tasks.map((task) => (<>{task.title}</>))}
             {comments}
         </>
+    )
+}
+
+export default function TaskRoute({ dehydratedState }) {
+
+    return (
+        <HydrationBoundary client={dehydratedState}>
+            <Tasks />
+        </HydrationBoundary>
     )
 }
