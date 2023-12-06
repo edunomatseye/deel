@@ -50,3 +50,34 @@ export default function MyApp({Component, pageProps}) {
         </ReactQueryProvider>
     )
 }
+
+//project/tasks.page
+const getProjectTasksPage = async ({ queryKey, signal }) => {
+    const response = await fetch(url + queryKey, { signal })
+    if(!response.ok) throw new Error(response.statusText)
+    return response.json()
+}
+const qc = new QueryClient();
+export async function getServerSideProps(context) {
+    await qc.prefetchQuery({
+        queryKey: ["project", "tasks"],
+        queryFn: getProjectTasks
+    })
+    return {
+        props: {
+            dehydratedState: dehydrate(qc)
+        }
+    }
+}
+
+export default async function Tasks() {
+    const { data } = useQuery({ queryKey: ["project", "tasks"], queryFn: getProjectTasks})
+    const { data: comments } = useQuery({ queryKey: ["project", "comments"], queryFn: getProjectTaskCommnet})
+
+    return (
+        <>
+            {data.project.tasks.map((task) => (<>{task.title}</>))}
+            {comments}
+        </>
+    )
+}
