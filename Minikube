@@ -102,3 +102,4 @@ const wrapper = ({ Component, pageProps, children }) => {
 const { result } = renderHook(() => customHook(), { wrapper })
 await waitFor(() => expect(result.current.isSuccess).tobe(true))
 expect(result.current.data).toEqual('Hello')
+
