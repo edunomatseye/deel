@@ -103,3 +103,15 @@ const { result } = renderHook(() => customHook(), { wrapper })
 await waitFor(() => expect(result.current.isSuccess).tobe(true))
 expect(result.current.data).toEqual('Hello')
 
+
+//Route handlers
+export async function GET(request: Request) {
+    const data = await fetch('/api/settings', {
+        signal: signal,
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'API-KEY': 'hello' },
+        next: {
+            revalidate: 60
+        }
+    }).then(response => response.json())
+    return Response.json({ data })
+}
