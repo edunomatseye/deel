@@ -110,7 +110,8 @@ export async function GET(request: Request) {
         signal: signal,
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'API-KEY': 'hello' },
         next: {
-            revalidate: 60
+            revalidate: 60,
+            tags: ['settings']
         }
     }).then(response => response.json())
     return Response.json({ data })
