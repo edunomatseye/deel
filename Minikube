@@ -116,3 +116,19 @@ export async function GET(request: Request) {
     }).then(response => response.json())
     return Response.json({ data })
 }
+
+//generic function inference.
+import { z } from 'zod';
+
+function awesomeFunction<TSchema extends Schema>(schema: z.Schema<TSchema>, handler: (input: TSchema) => void) {
+
+    return (input: unknown) => handler(schema.parse(input))
+}
+
+const schema = z.object({
+    id: z.number(),
+    fullName: z.string(),
+})
+type Schema = z.infer<typeof schema>
+
+awesomeFunction(schema, (input) => console.log(input.fullName))
