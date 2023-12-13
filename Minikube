@@ -132,3 +132,10 @@ const schema = z.object({
 type Schema = z.infer<typeof schema>
 
 awesomeFunction(schema, (input) => console.log(input.fullName))
+
+//convert an array into a map/object.
+const arr = [1,4,9,5,4,34,34]
+const m = new Map();
+m.forEach( x => {
+    m.set(x, (m.get(x) || 0) + 1)
+})
