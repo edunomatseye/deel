@@ -139,3 +139,12 @@ const m = new Map();
 m.forEach( x => {
     m.set(x, (m.get(x) || 0) + 1)
 })
+
+//write a sql query to extract year and month from timestamp 
+SELECT EXTRACT (year FROM payment_ts) AS year,
+    EXTRACT (month FROM payment_ts) AS mon,
+    sum(amount) AS rev
+FROM payment
+GROUP BY year, mon
+ORDER BY rev ASC
+LIMIT 10
