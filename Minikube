@@ -146,5 +146,6 @@ SELECT EXTRACT (year FROM payment_ts) AS year,
     sum(amount) AS rev
 FROM payment
 GROUP BY year, mon
+HAVING SUM(amount) > 20
 ORDER BY rev ASC
 LIMIT 10
