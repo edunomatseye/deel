@@ -155,3 +155,26 @@ involued with infrastruture like aws, azure and gcp, networking, security while 
 involued with CI/CD tools and pipelines for ci and cd. 
 
 react github interview profile
+
+const userSchema = new mongoose.Schema({
+    name: String,
+  });
+  
+  // Define the Album schema
+  const albumSchema = new mongoose.Schema({
+    title: String,
+    performer: String,
+    cost: Number,
+  });
+  
+  // Define the Purchase schema, referencing User and Album
+  const purchaseSchema = new mongoose.Schema({
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    album: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Album',
+    },
+  });
