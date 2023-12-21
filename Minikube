@@ -178,3 +178,9 @@ const userSchema = new mongoose.Schema({
       ref: 'Album',
     },
   });
+
+  const p1 = new Promise((resolve, reject) => setTimeout(resolve, 500, 'Yes ooo!'))
+const p2 = new Promise((resolve, reject) => setTimeout(reject, 100, 'No ooo!'))
+await Promise.race([p1, p2]).then(console.log).catch(e => console.error('Shayo '+e))
+await Promise.any([p1, p2]).then(console.log).catch(e => console.warn('Shayo '+e))
+
