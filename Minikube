@@ -189,3 +189,11 @@ function loader({ params, request }) {
     const newNotes = notes.filter(note => note.id !== noteId)
     const selectedNote = notes.find(note => note.id === noteId )
 }
+
+curl --request POST \
+--url 'http://localhost:3000/api/users' \
+--header 'Content-Type: application/json' \
+--data '{
+    "gender": "Femal",
+    "age": "34"
+}'
