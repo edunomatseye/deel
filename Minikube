@@ -197,3 +197,13 @@ curl --request POST \
     "gender": "Femal",
     "age": "34"
 }'
+
+fire and forget fetch calls
+await fetch(url, {
+    method: 'POST',
+    headers: {
+        "Authorization": 'bearer ' + token,
+        "Content-Type": "application/json
+    },
+    body: JSON.stringify(newNotes)
+})
