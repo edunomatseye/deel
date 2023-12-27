@@ -207,3 +207,26 @@ await fetch(url, {
     },
     body: JSON.stringify(newNotes)
 })
+
+import type { NextApiRequest, NextApiResponse } from 'next';
+import Cors from 'cors';
+
+const cors = Cors({
+    methods: ['POST', 'GET', 'HEAD']
+})
+
+async function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: Function){
+    return new Promise((resolve, reject) => {
+        fn(req, res, (result: any) => {
+            if(result instanceof Error){
+                return reject(result)
+            }
+            return resolve(result)
+        })
+    })
+}
+
+export default async function handler(request: NextAPIRequest, response: NextAPIResponse) {
+    await runMiddleware(request, response, cors)
+    response.json({})
+}
