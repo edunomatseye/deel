@@ -230,3 +230,18 @@ export default async function handler(request: NextAPIRequest, response: NextAPI
     await runMiddleware(request, response, cors)
     response.json({})
 }
+
+//Typescript builder pattern
+
+interface FooBuilder<T = never> {
+    add: <newType>() => FooBuilder<newType | T>;
+    value: T
+}
+
+declare const u: FooBuilder;
+
+const r = u.add<string>()
+ .add<number>()
+ .add<boolean>().value;
+
+console.log(r);
