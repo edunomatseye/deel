@@ -245,3 +245,29 @@ const r = u.add<string>()
  .add<boolean>().value;
 
 console.log(r);
+
+
+import { relations } from 'drizzle-orm';
+
+export const user = pgTable('user', {
+    id: serial('id').primaryKey(),
+    name: text('name')
+})
+
+export const userRelations = relations(user, ({ many }) => ({
+    posts: many(post)
+}))
+
+export const post = pgTable('post', {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    content: text('content'),
+    authorId: integer('author_id'),
+})
+
+export const postRelations = relations(post, ({ one }) => ({
+    author: one(user, {
+        fields: [post.authorId],
+        references: [user.id]
+    })
+}))
