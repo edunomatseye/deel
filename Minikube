@@ -271,3 +271,12 @@ export const postRelations = relations(post, ({ one }) => ({
         references: [user.id]
     })
 }))
+
+type Fruits = '@M' | '@G' | '@A';
+type Switch<T extends Fruits> = {
+    '@M': 'Mango',
+    '@G': 'Grape',
+    '@A': 'Apple',
+}[T];
+type Mango = Switch<'@M'>
+const mango: mango = 'Mango'
