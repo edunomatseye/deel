@@ -280,3 +280,5 @@ type Switch<T extends Fruits> = {
 }[T];
 type Mango = Switch<'@M'>
 const mango: mango = 'Mango'
+
+Even though native ESM is now widely supported, shipping unbundled ESM in production is still inefficient (even with HTTP/2) due to the additional network round trips caused by nested imports. To get the optimal loading performance in production, it is still better to bundle your code with tree-shaking, lazy-loading and common chunk splitting (for better caching).
