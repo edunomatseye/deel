@@ -303,3 +303,6 @@ createConfig(), createEnv({
     },
     runtimeEnv: process.env,
 })
+
+in as much as we write test to boost confidence in the way users use our application, we should 
+also test in a way that users uses our application and not the implementation details.
