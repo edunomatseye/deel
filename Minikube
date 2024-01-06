@@ -334,3 +334,7 @@ app.listen(port, () => {
 });
 
 bun run server.ts
+
+how to clone a remote github branch 
+git clone -b eo/sc-2345/getting-back-into-2024 <remote-repo-url>
+git clone -b eo/sc-2345/getting-back-into-2024 --single-branch <remote-repo-url>
