@@ -353,3 +353,14 @@ import { createClient } from '@supabase/supabase-js'
 
 // Create a single supabase client for interacting with your database
 const supabase = createClient('https://xyzcompany.supabase.co', 'public-anon-key')
+
+type APIRoute<T> = (init: {params: T, request: Request}) => Promise<Response>
+type Params = {gender: string, age: number}
+async function GET (ctx: { params: Params, request: Request}) {
+    const token = ctx.request.headers.get('Authorization')
+    return new Response(JSON.stringify({
+        gender: ctx.params.gender,
+        age: ctx.params.age,
+        token
+    }))
+}
