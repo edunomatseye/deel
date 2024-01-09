@@ -377,3 +377,9 @@ export const connection = await mysql.createConnection({
     password
 })
 export const db = drizzle(connection, { schema })
+
+
+
+import { migrate } from '@drizzle-orm/mysql2/migrator'
+await migrate(db, { migrationsFolder: './drizzle' })
+connection.end()
