@@ -383,3 +383,26 @@ export const db = drizzle(connection, { schema })
 import { migrate } from '@drizzle-orm/mysql2/migrator'
 await migrate(db, { migrationsFolder: './drizzle' })
 connection.end()
+
+export const CounterContext = createContext([{ count: 0 }, {}]);
+
+export function CounterProvider(props) {
+  const [state, setState] = createStore({ count: props.count || 0 });
+  const counter = [
+    state,
+    {
+      increment() {
+        setState("count", (c) => c + 1);
+      },
+      decrement() {
+        setState("count", (c) => c - 1);
+      },
+    },
+  ];
+
+  return (
+    <CounterContext.Provider value={counter}>
+      {props.children}
+    </CounterContext.Provider>
+  );
+}
