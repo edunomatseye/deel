@@ -406,3 +406,6 @@ export function CounterProvider(props) {
     </CounterContext.Provider>
   );
 }
+
+vinxi
+Compose full stack applications (and frameworks) using Vite, the versatile bundler and dev server, and Nitro, the universal production server. The core primitive in vinxi is a router.
