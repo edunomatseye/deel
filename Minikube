@@ -409,3 +409,12 @@ export function CounterProvider(props) {
 
 vinxi
 Compose full stack applications (and frameworks) using Vite, the versatile bundler and dev server, and Nitro, the universal production server. The core primitive in vinxi is a router.
+
+
+import { queryClient } from "./query-client";
+
+export const loader = ({ params }) => {
+  return queryClient.fetchQuery(queryKey, queryFn, {
+    staleTime: 10000,
+  });
+};
