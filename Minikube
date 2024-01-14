@@ -418,3 +418,13 @@ export const loader = ({ params }) => {
     staleTime: 10000,
   });
 };
+
+import { queryClient } from "./query-client";
+
+export const action = async ({ request, params }) => {
+  const formData = await request.formData();
+  const updates = Object.fromEntries(formData);
+  await updateContact(params.contactId, updates);
+  await queryClient.invalidateQueries(["contacts"]);
+  return redirect(`/contacts/${params.contactId}`);
+};
