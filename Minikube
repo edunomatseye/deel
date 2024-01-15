@@ -428,3 +428,15 @@ export const action = async ({ request, params }) => {
   await queryClient.invalidateQueries(["contacts"]);
   return redirect(`/contacts/${params.contactId}`);
 };
+
+import Database from 'better-sqlite3'
+
+const db = new Database('sql.db')
+const data = db.exec(query)
+const insertData = db.prepare("INSERT INTO user(id, name, email) values(?, ?, ?)")
+
+data = [{},{},{}]
+data.forEach(user => {
+    insertData.run(user.id, user.name, user.email)
+})
+db.close()
