@@ -440,3 +440,40 @@ data.forEach(user => {
     insertData.run(user.id, user.name, user.email)
 })
 db.close()
+
+import { Client } from 'pg'
+
+const client = new Client({
+    connectionString: 'postgres://localhost:3456/db',
+    host,
+    port,
+    username,
+    password,
+    database
+})
+
+migrate(drizzle(client)));
+drizzle(client).select().from('table')
+
+export default {
+    async fetch(
+        req: Request,
+        env: Env,
+        ctx: ExecutionContext
+    ): Promise<Response> {
+        
+        return Response.json()
+    }
+}
+
+const db = drizzle(async (sql, params, method) => {
+    try {
+        const response = axios.post('http://localhost:3232/query', {sql, params, metho})
+        return {
+            data: response.data
+        }
+    } catch(e) {
+        console.error(e)
+        return { data: [] }
+    }
+})
