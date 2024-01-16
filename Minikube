@@ -495,3 +495,11 @@ jobs:
         steps:
         - uses: actions/checkout@v2
         - name: Set up JDK 1.8
+          run: .gradle ...
+        - name: Build and push Docker Image
+          uses: mr-smithers-excellent/docker-build-push@v4
+          with:
+            image: teotechng/demo-app
+            registry: docker.io
+            username: ${{secrets.DOCKER_USERNAME}}
+            password: ${{secrets.DOCKER_PASSWORD}}
