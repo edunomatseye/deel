@@ -503,3 +503,32 @@ jobs:
             registry: docker.io
             username: ${{secrets.DOCKER_USERNAME}}
             password: ${{secrets.DOCKER_PASSWORD}}
+
+
+            type TOptions = {
+                method: 'GET' | 'POST',
+                url: string,
+            }
+            type TGInput = {
+                [index: number]: string,
+                params: Record<string, string>,
+                url: string
+            }
+            type DefineFetcher = <TInput extends {}, TOutput>(options: TOptions) => (input: TInput) => Promise<TOutput>
+            
+            const get = ({params, url}: TGInput) => {
+                return fetch(url+new URLSearchParams(params).toString(), {method: 'GET'}).then(response => response.json()).catch(console.error)
+            }
+            const post = ({params, url}: TGInput) => {
+                return fetch(url, {method: 'POST', body: JSON.stringify(params)}).then(response => response.json()).catch(console.error)
+            }
+            
+            const url = 'https://jsonplaceholder.typicode.com/comments?'
+            
+            const defineFetcher: DefineFetcher = ({method, url}) => (params) => {
+                const fetcher = method === 'GET'? get: post;
+                return fetcher({params, url})
+            }
+            
+            const getUser = defineFetcher<{postId: string}, {name: string, gender: "Male"|"Female"}>({method: 'GET', url})
+            getUser({postId: '1'}).then(console.log)
