@@ -477,3 +477,21 @@ const db = drizzle(async (sql, params, method) => {
         return { data: [] }
     }
 })
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+
+jobs: 
+    build:
+
+        runs-on: ${{matrix.os}}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, macOS-latest, windows-latest]
+
+        steps:
+        - uses: actions/checkout@v2
+        - name: Set up JDK 1.8
