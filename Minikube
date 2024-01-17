@@ -532,3 +532,23 @@ jobs:
             
             const getUser = defineFetcher<{postId: string}, {name: string, gender: "Male"|"Female"}>({method: 'GET', url})
             getUser({postId: '1'}).then(console.log)
+
+            export default async function Page(request: NextRequest) {
+                async function createProduct(formData: FormData) {
+                    'use server'
+                    const product = Object.fromEntriest(formData.entries());
+                    const name = formData.get('productName')
+                    const products = db.select().from(product).getAll()
+                    await db.insert(products).values(product)
+                    revalidateTag('products')
+                }
+            
+                return (
+                    <>
+                        <form action={createProduct}>
+                            <inpupt name="productName" />
+                            <input type="submit" value="Submit" />
+                        </form>
+                    </>
+                )
+            }
