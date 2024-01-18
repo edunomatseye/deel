@@ -552,3 +552,23 @@ jobs:
                     </>
                 )
             }
+
+import { type NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers'
+
+export default async function middleware(request: NextRequest) {
+    const token = request.headers.get('Authorization')
+    if(request.nextUrl.pathname === '/profile')
+        NextResponse.redirect(new URL('/', new Request('/').url))
+
+    const theme = cookies.get('theme')
+    if(!theme){
+        cookies.set('theme', 'dark')
+    }
+
+    return NextResponse.next()
+}
+
+export const config = {
+    matcher: '/prodile'
+}
