@@ -592,3 +592,25 @@ export class PostComponent {
         switchMap(id => this.http.get<Post>(`https://jsonplaceholder.typicode.com/post/{id}`))
     ), {initialValue: null})
 }
+
+<form action={formAction} onSubmit={onSubmit}>
+    </form>
+
+const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget.value)
+}
+
+function formAction(formData: FormData) {
+    const title = formData.get('title')
+    const formD = Object.fromEntries(formData)
+    
+}
+
+export function SubmitForm() {
+    const formStatus = useFormStatus()
+    const isLoading = formStatus.isLoading
+    return <button type='submit'>
+        {isLoading ? 'Loading': 'Submit'}
+        </button>
+}
