@@ -614,3 +614,15 @@ export function SubmitForm() {
         {isLoading ? 'Loading': 'Submit'}
         </button>
 }
+
+body {
+    color: var(--text);
+    background-color: var(--secondary);
+    font-family: var(--body-font); /* Token for font */
+  }
+  
+  .button {
+    background-color: var(--primary);
+    padding: var(--spacing-small);
+    border-radius: var(--border-radius-default); /* Token for border radius */
+  }
