@@ -637,3 +637,28 @@ HAVING constriaints
 ORDER BY ASC
 LIMIT 5
 
+async function retry<T>(fn: () => Promise<T>, retries: number = 5) {
+    let result;
+    try {
+        result = await fn()
+    } catch(e) {
+        if(retries > 0){
+            console.info('Retrying the promise function')
+            await retry(fn, --retries)
+        }
+        //throw(e)
+
+        do {
+            console.log('hello',e)
+            --retries;
+        } while(retries > 0)
+
+        while(retries > 0) {
+            console.log('whiling...',e)
+            --retries;
+        }
+    }
+    return result
+}
+
+const r = retry(() => Promise.reject(5), 3)
