@@ -662,3 +662,30 @@ async function retry<T>(fn: () => Promise<T>, retries: number = 5) {
 }
 
 const r = retry(() => Promise.reject(5), 3)
+
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
+const schema = z.object({
+    name: z.string(),
+    age: z.number()
+})
+type Schema = z.infer<typeof schema>
+
+const App = () => {
+    const { register, handleSubmit } = useForm<Schema>({
+        resolver: zodResolver(schema)
+    })
+    const onSubmit = (data: Schema) => {
+        console.log(data)
+    }
+    
+    return (
+        <form onsubmit={handleSubmit(onSubmit)}>
+            <input {...register('name')} />
+            <input {...register('age', {valueAsNumber:true})} type="number" />
+            <input type='submit' />
+        </form>
+    )
+}
