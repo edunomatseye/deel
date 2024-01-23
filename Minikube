@@ -689,3 +689,9 @@ const App = () => {
         </form>
     )
 }
+
+const useToggle = (initialValue: boolean) => {
+    const [value, setValue] = React.useState<boolean>(initialValue)
+    const toggleValue = () =>setValue(value => !value)
+    return [value, toggleValue] as const
+}
