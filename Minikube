@@ -697,3 +697,17 @@ const useToggle = (initialValue: boolean) => {
 }
 
 type Prettify<T> = T extends object ? {[K in keyof T]: T[K]} & {} : T
+
+const [isPending, startTransition] = useTransition();
+const [inputV, setInputV] = useState()
+const [query, setQuery] = useState()
+
+const handleChange = (e) => {
+    setInputV(e.target.value)
+    startTransition(() => setQuery(e.target.value))
+}
+
+
+<input value={inputV} onchange={handleChange} />
+{isPending && <div> Filtered list is loading</div>}
+{filterStuff.map()}
