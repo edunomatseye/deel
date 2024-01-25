@@ -695,3 +695,5 @@ const useToggle = (initialValue: boolean) => {
     const toggleValue = () =>setValue(value => !value)
     return [value, toggleValue] as const
 }
+
+type Prettify<T> = T extends object ? {[K in keyof T]: T[K]} & {} : T
