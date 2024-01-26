@@ -711,3 +711,8 @@ const handleChange = (e) => {
 <input value={inputV} onchange={handleChange} />
 {isPending && <div> Filtered list is loading</div>}
 {filterStuff.map()}
+
+Immediate invoked function expression in modules
+(function(exports, require, module, __filename, __dirname) {
+    return 
+})()
