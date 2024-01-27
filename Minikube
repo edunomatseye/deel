@@ -716,3 +716,12 @@ Immediate invoked function expression in modules
 (function(exports, require, module, __filename, __dirname) {
     return 
 })()
+
+const EventEmitter = require("node:events");
+
+const eventEmitter = new EventEmitter();
+
+emitterEmitter.on('Order-Pizza', () => {
+    console.log("Ordered Pizza is just a minute away")
+})
+eventEmitter.emit('Order-Pizza');
