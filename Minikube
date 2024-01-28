@@ -712,7 +712,7 @@ const handleChange = (e) => {
 {isPending && <div> Filtered list is loading</div>}
 {filterStuff.map()}
 
-Immediate invoked function expression in modules
+//Immediate invoked function expression in modules
 (function(exports, require, module, __filename, __dirname) {
     return 
 })()
@@ -725,3 +725,19 @@ emitterEmitter.on('Order-Pizza', () => {
     console.log("Ordered Pizza is just a minute away")
 })
 eventEmitter.emit('Order-Pizza');
+
+const fs = require('node:fs')
+const c = fs.readFileSync(path.join(__dirname, schema.json), 'utf-8')
+console.log(c);
+
+fs.readFile('./schema.json', 'utf-8', (error, data) => {
+    if(error) throw new Error('Error reading file');
+    console.log(data)
+})
+
+const readableStream = fs.createReadStream('./text1.txt', {encoding: 'utf-8'})
+const writeableStream = fs.createWriteStream('./text2.txt')
+readableStream.on('data', (chunk) => {
+    console.log(data)
+    writeableStream.write(chunk);
+})
