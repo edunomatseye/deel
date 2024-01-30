@@ -750,3 +750,12 @@ type SquareEvent = { kind: "square", x: number, y: number };
 type CircleEvent = { kind: "circle", radius: number };
  
 type Config = EventConfig<SquareEvent | CircleEvent>
+
+import { sql } from "drizzle-orm";
+import { timestamp, pgTable } from "drizzle-orm/pg-core";
+const table = pgTable('table', {
+  timestamp1: timestamp('timestamp1'),
+  timestamp2: timestamp('timestamp2', { precision: 6, withTimezone: true }),
+  timestamp3: timestamp('timestamp3').defaultNow(),
+  timestamp4: timestamp('timestamp4').default(sql`now()`),
+});
