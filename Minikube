@@ -759,3 +759,14 @@ const table = pgTable('table', {
   timestamp3: timestamp('timestamp3').defaultNow(),
   timestamp4: timestamp('timestamp4').default(sql`now()`),
 });
+
+import { serial, text, integer, pgTable } from "drizzle-orm/pg-core";
+export const user = pgTable("user", {
+  id: serial("id"),
+  name: text("name"),
+});
+export const book = pgTable("book", {
+  id: serial("id"),
+  name: text("name"),
+  authorId: integer("author_id").references(() => user.id)
+});
