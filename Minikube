@@ -770,3 +770,12 @@ export const book = pgTable("book", {
   name: text("name"),
   authorId: integer("author_id").references(() => user.id)
 });
+
+function fixedForwardRef<T, P = {}>(render: (props: P, ref: React.Ref<T>) => React.ReactNode)
+    : (props: P & React.RefAttributes<T>) => React.ReactNode
+{
+    return React.forwardRef(render) as any;
+}
+
+const ForwardedRef = fixedForwardRef(Table)
+<ForwardedRef data={} renderRow={() => { return <tr />}} />
