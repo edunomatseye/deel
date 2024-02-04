@@ -796,3 +796,15 @@ const result = await db.query.users.findMany({
     posts: true      
   },
 });
+
+const Element = React.createElement('div', {id: 'client'}, 'Login')
+gives you an object: 
+{
+    "type": "div",
+    "props": {
+        id: "client",
+        children: 'Login'
+    }
+}
+
+ReactDOM.render(Element, node)
