@@ -808,3 +808,17 @@ gives you an object:
 }
 
 ReactDOM.render(Element, node)
+
+export default function Page() {
+    async function createInvoice(formData: FormData) {
+      'use server'
+   
+      const rawFormData = {
+        customerId: formData.get('customerId'),
+        amount: formData.get('amount'),
+        status: formData.get('status'),
+      }
+    }
+   
+    return <form action={createInvoice}>...</form>
+}
