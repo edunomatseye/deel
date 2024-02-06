@@ -822,3 +822,16 @@ export default function Page() {
    
     return <form action={createInvoice}>...</form>
 }
+
+class User extends Component {
+    constructor(props) {
+      super(props);
+      this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick() {
+      console.log("SingOut triggered");
+    }
+    render() {
+      return <button onClick={this.handleClick}>SingOut</button>;
+    }
+  }
