@@ -898,3 +898,13 @@ export default async function Page() {
 }
 
 nx release --dry-run --first-release
+
+test.describe("navigation", () => {
+    test.beforeEach(async ({ page }) => {
+        await page.goto('http://localhost:3000')
+    })
+
+    test('main navigation', ({ page }) => {
+        await expect(page).toHaveURL('http://localhost:3000')
+    })
+})
