@@ -936,3 +936,6 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+Generate the migration
+pnpm drizzle-kit generate:mysql
