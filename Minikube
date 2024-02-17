@@ -962,3 +962,17 @@ export default defineConfig({
     baseURL: 'http://127.0.0.1:3000',
   },
 });
+
+
+import { SQLWrapper, and, eq, gte, ilike } from 'drizzle-orm';
+const filters: SQLWrapper[] = [];
+const searchFilter = true;
+const priceFilter = true;
+const statusFilter = true;
+if (searchFilter) filters.push(ilike(orders.title, 'my-order'));
+if (priceFilter) filters.push(gte(orders.price, 1000));
+if (statusFilter) filters.push(eq(orders.status, 'pending'));
+const result = await db
+  .select()
+  .from(orders)
+  .where(and(...filters));
