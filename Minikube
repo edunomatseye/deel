@@ -976,3 +976,66 @@ const result = await db
   .select()
   .from(orders)
   .where(and(...filters));
+
+  import React, { useState, useEffect } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
+
+// Replace with your actual server action function
+const submitForm = async (data) => {
+  // Simulate server-side processing
+  const response = await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ success: Math.random() > 0.5 });
+    }, 1000);
+  });
+  return response;
+};
+
+const MyForm = () => {
+  const [formData, formAction] = useFormState(submitForm);
+  const { pending } = useFormStatus();
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    formAction({ name, email });
+  };
+
+  useEffect(() => {
+    if (formData.success) {
+      // Handle successful submission
+      setName('');
+      setEmail('');
+      alert('Form submitted successfully!');
+    } else if (formData.error) {
+      // Handle submission error
+      alert('There was an error submitting the form. Please try again.');
+    }
+  }, [formData]);
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <label htmlFor="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button type="submit" disabled={pending}>
+        Submit {pending ? '...' : ''}
+      </button>
+    </form>
+  );
+};
+
+export default MyForm;
