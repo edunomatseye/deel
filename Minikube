@@ -1039,3 +1039,26 @@ const MyForm = () => {
 };
 
 export default MyForm;
+
+
+const items = Array.from({length: 100}).map((_, i) => ({id: i, name: `Item ${i}`}))
+type Item = typeof items[number]
+const LIMIT = 10;
+export function fetchItems({pageParam}: {pageParam: number}):Promise<{
+    data: Item[];
+    currentPage: number;
+    nextPage: number|null
+}> {
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const nextCursor = pageParam + LIMIT
+            resolve({
+                data: items.slice(pageParam, nextCursor),
+                currentPage: pageParam,
+                nextPage: nextCursor < items.length? nextCursor: null,
+            })
+        }, 2000)
+    })
+
+}
