@@ -1102,3 +1102,16 @@ class MyWeakMap {
     delete key[this.#marker];
   }
 }
+
+function cached(getter) {
+  // A Map from string URLs to WeakRefs of results
+  const cache = new Map();
+  return async (key) => {
+    if (cache.has(key)) {
+      return cache.get(key).deref();
+    }
+    const value = await getter(key);
+    cache.set(key, new WeakRef(value));
+    return value;
+  };
+}
