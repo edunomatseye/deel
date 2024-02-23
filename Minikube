@@ -1115,3 +1115,36 @@ function cached(getter) {
     return value;
   };
 }
+
+function monthlyCharge(month, subscription, users) {
+  // Check for invalid inputs
+  if (!month || !users) {
+    return 0;
+  }
+
+  // Check if subscription is present and active for the given month
+  if (!subscription || !subscription.monthlyPriceInCents) {
+    return 0;
+  }
+
+  const monthDate = new Date(month); // Convert month string to Date object
+
+  // Calculate the start and end dates of the month for billing
+  const startDate = firstDayOfMonth(monthDate);
+  const endDate = lastDayOfMonth(monthDate);
+
+  // Filter active users based on their activation and deactivation dates
+  const activeUsers = users.filter(user => {
+    const userStartDate = user.activatedOn || startDate; // Handle missing activatedOn
+    const userEndDate = user.deactivatedOn ? nextDay(user.deactivatedOn) : endDate; // Handle missing/null deactivationOn
+
+    // Check if user was active within the billing period (inclusive)
+    return userStartDate <= endDate && userEndDate > startDate;
+  });
+
+  // Calculate the total monthly charge in cents
+  const totalCharge = activeUsers.length * subscription.monthlyPriceInCents;
+
+  // Round to the nearest cent
+  return Math.round(totalCharge);
+}
