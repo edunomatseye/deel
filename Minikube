@@ -1158,3 +1158,8 @@ export default function App() {
     'Hello, this is a JSX Code!'
   );
 }
+
+dynamic module loading,
+import('./dynamic/module/loading.js').then((module) => {
+  // do something with the module
+})
