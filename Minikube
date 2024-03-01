@@ -1230,3 +1230,15 @@ Instead use setState() method. It schedules an update to a component's state obj
 //Correct
 this.setState({ message: "Hello World" });
 Note: You can directly assign to the state object either in constructor or using latest javascript's class field declaration syntax.
+
+type SayHelloFn = (name: string) => string;
+
+(function (name: string): string {
+    return `hello ${name}`
+}) satisfies SayHelloFn;
+
+const hi = sayHello()
+
+const sayHellos: SayHelloFn = (name: string) => {
+    return ``
+} satisfies SayHelloFn
