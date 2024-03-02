@@ -1242,3 +1242,5 @@ const hi = sayHello()
 const sayHellos: SayHelloFn = (name: string) => {
     return ``
 } satisfies SayHelloFn
+
+npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents=""
