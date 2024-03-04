@@ -1244,3 +1244,5 @@ const sayHellos: SayHelloFn = (name: string) => {
 } satisfies SayHelloFn
 
 npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents=""
+
+await expect(page.getByTestId('status')).toHaveText('Submitted');
