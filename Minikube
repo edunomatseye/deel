@@ -1256,3 +1256,39 @@ await expect(page.getByTestId('status')).toHaveText('Submitted');
   }
   ...
 }
+
+import React, { forwardRef, useRef } from 'react';
+
+const Table = <T,>(props: {data: T[], renderRow: (row: T) => React.ReactNode}): React.ReactNode => {
+    return (
+        <table>
+        {props.data.map((row, index) => <props.renderRow key={index} {...row} />)}
+        </table>
+    )
+}
+
+<Table data={["a", "b"]} renderRow={(row) => {
+    return (row)
+}} />
+
+
+const Tables = React.forwardRef(<T,>(props: {data: T[], renderRow: (row: T) => React.ReactNode }, ref: React.ForwardedRef<HTMLTableElement>): React.ReactNode => {
+    return (
+        <table ref={ref}>Hello {
+            props.data.map((row, index) => <props.renderRow key={index} {...row} />)
+        }</table>
+    )
+})
+
+function fixedForwardRef2 <T, P = {}>(
+    render: (props: P, ref: React.Ref<T>) => React.ReactNode
+    ): (props: P & React.RefAttributes<T>) => React.ReactNode {
+    return React.forwardRef(render) as any;
+}
+
+function fixedForwardRef<T, P = {}>(
+  render: (props: P, ref: React.Ref<T>) => React.ReactNode
+): (props: P & React.RefAttributes<T>) => React.ReactNode {
+  return React.forwardRef(render) as any;
+}
+
