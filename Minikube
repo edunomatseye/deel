@@ -1246,3 +1246,13 @@ const sayHellos: SayHelloFn = (name: string) => {
 npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents=""
 
 await expect(page.getByTestId('status')).toHaveText('Submitted');
+
+{
+  "name": "myreactapp",
+  "scripts": {
+    "start": "nx serve",
+    "build": "nx build",
+    "test": "nx test"
+  }
+  ...
+}
