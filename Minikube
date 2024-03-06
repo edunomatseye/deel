@@ -1292,3 +1292,19 @@ function fixedForwardRef<T, P = {}>(
   return React.forwardRef(render) as any;
 }
 
+declare function <T extends z.ZodType>createHandler(
+  schema: T, 
+  handler: (
+      req: Omit<NextApiRequest, keyof z.output<T>> & z.output<T>, 
+      res: NextApiResponse
+  ) => void | Promise<void>
+): NextApiHandler;
+
+const schema = z.object({
+  body: z.object({
+      id: z.string(),
+  })
+})
+const handler = createHandler(schema, (req) => {
+  req.body.id;
+})
