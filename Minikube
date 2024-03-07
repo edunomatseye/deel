@@ -1308,3 +1308,17 @@ const schema = z.object({
 const handler = createHandler(schema, (req) => {
   req.body.id;
 })
+
+function cached(fetcher) {
+  const cache = new Map();
+
+  return async (key) => {
+    if(cache.has(key)) {
+      return cache.get(key);
+    }
+
+    const value = await fetch(key);
+    cache.set(key, new WeakMap(value));
+    return value;
+  }
+}
