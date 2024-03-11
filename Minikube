@@ -1358,3 +1358,20 @@ export const postsRelations = relations(posts, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+declare const fetchWithSchema: <T extends z.ZodSchema>(
+  url: string,
+  schema: T
+) => Promise<z.output<T>> | z.output<T>
+
+declare const fetchAsSchema: <T>(
+  url: string,
+  schema: {
+      parse: (input: unknown) => T
+  }
+) => Promise<T>
+
+const response = fetchWithSchema('http://', z.object({
+  id: z.number(),
+  fullName: z.string()
+}))
