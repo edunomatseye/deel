@@ -1453,3 +1453,8 @@ prompt([
     const pokemon = answers.pokemon
     createPokemonMoves(pokemon)
 })
+
+
+const AsyncIteratorPrototype = Object.getPrototypeOf(
+  Object.getPrototypeOf(Object.getPrototypeOf((async function* () {})())),
+);
