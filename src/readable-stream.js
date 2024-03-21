@@ -35,3 +35,32 @@ fetch("https://www.example.org")
     // Do things with result
     console.log(result);
   });
+
+const image = document.getElementById("image");
+fetch("../tortoise.jpg")
+  .then((response) => response.body)
+  .then((body) => {
+    const reader = body.getReader();
+    return new ReadableStream({
+      start(controller) {
+        pump();
+
+        function pump() {
+          reader.read().then(({ done, value }) => {
+            if (done) {
+              controller.close();
+              return;
+            }
+
+            controller.enqueue(value);
+            return pump();
+          });
+        }
+      },
+    });
+  })
+  .then((stream) => new Response(stream))
+  .then((response) => response.blob())
+  .then((blob) => URL.createObjectURL(blob))
+  .then((imageURL) => console.log((image.src = imageURL)))
+  .catch(console.error);
