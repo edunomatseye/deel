@@ -64,3 +64,6 @@ fetch("../tortoise.jpg")
   .then((blob) => URL.createObjectURL(blob))
   .then((imageURL) => console.log((image.src = imageURL)))
   .catch(console.error);
+
+const buffer = new ArrayBuffer(8);
+const view = new Int32Array(buffer);
