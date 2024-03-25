@@ -1475,3 +1475,22 @@ const Post = ObjectWithId.extend({
 const Comment = ObjectWithId.extend({
   text: z.string(),
 });
+
+async function retry<T>(
+  fn: (arg: number) => Promise<T>, 
+  retries: number = 5
+): Promise<T> {
+  try {
+      return await fn(232);
+  } catch(e) {
+      if(retries > 0) {
+          console.error(e);
+          return await retry(fn, retries - 1)
+      }
+      throw e
+  }
+}
+
+retry(() => Promise.resolve('Iyanu')).then(str => {
+  console.log(str)
+})
