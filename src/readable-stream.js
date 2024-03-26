@@ -67,3 +67,27 @@ fetch("../tortoise.jpg")
 
 const buffer = new ArrayBuffer(8);
 const view = new Int32Array(buffer);
+
+import { createSreamableUI } from "ai/src";
+async function confirmPurchase(symbol, amount) {
+  "use server";
+
+  const uiStream = createStreamableUI(
+    <p>
+      {spinner} purchasing {amount} ${symbol}
+    </p>,
+  )(async () => {
+    await sleep(2000);
+
+    uiStream.update(<></>);
+
+    await sleep(2000);
+
+    uiStream.done(<></>);
+  })();
+
+  return {
+    id: Date.now(),
+    display: uiStream.value,
+  };
+}
