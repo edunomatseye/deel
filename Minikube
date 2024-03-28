@@ -1581,3 +1581,14 @@ createBrowserRouter([
     ],
   },
 ]);
+
+const buffer = new ArrayBuffer(8, { maxByteLength: 16 });
+const float32 = new Float32Array(buffer);
+
+console.log(float32.byteLength); // 8
+console.log(float32.length); // 2
+
+buffer.resize(12);
+
+console.log(float32.byteLength); // 12
+console.log(float32.length); // 3
