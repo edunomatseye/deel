@@ -1592,3 +1592,18 @@ buffer.resize(12);
 
 console.log(float32.byteLength); // 12
 console.log(float32.length); // 3
+
+async function loadCam() {
+  const {promise, resolve, reject} = Promise.withResolvers();
+  const stream = await navigator.mediaDevices.getUserMediaStream({video: true});
+  const recorder = new MediaRecorder(stream);
+
+  const chunks: Blob[] = [];
+  recorder.ondataavailable = (event) => chunks.push(event.data)
+  recorder.stop = (event) => resolve(window.URL.createObjectURL(new Blob(chunks)))
+  recorder.error = reject
+  recorder.start(1000)
+
+  return promise
+}
+loadCam.then(str => divEl.src = str);
