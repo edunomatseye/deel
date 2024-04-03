@@ -1636,3 +1636,27 @@ if (cluster.isPrimary) {
 
   console.log(`Worker ${process.pid} started`);
 }
+
+type PersonAttr = {
+  height?: 'small' | 'medium' | 'tall',
+  age?: number
+}
+
+const seyi = {
+  height: 'small',
+  get age() {
+      return Math.random() > 0.5 ? 2024 : undefined
+  }
+} satisfies PersonAttr;
+
+console.log(seyi.age)
+
+
+const myFunc = (constraint: PersonAttr) => {
+  //const { height } = constraint;
+  if(constraint.height) {
+      console.log(constraint.height.toUpperCase())
+  }
+}
+
+myFunc(seyi)
