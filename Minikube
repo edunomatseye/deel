@@ -1660,3 +1660,20 @@ const myFunc = (constraint: PersonAttr) => {
 }
 
 myFunc(seyi)
+
+import { StrictMode } from "react";
+
+function App() {
+  return (
+    <div>
+      <Header />
+      <StrictMode>
+        <div>
+          <ComponentOne />
+          <ComponentTwo />
+        </div>
+      </StrictMode>
+      <Header />
+    </div>
+  );
+}
