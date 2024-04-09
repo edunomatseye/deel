@@ -1685,3 +1685,57 @@ const connection = await mysql.createConnection({
   uri: process.env.PLANETSCALE_DATABASE_URL,
 });
 const db = drizzle(connection, { schema, mode: 'planetscale' });
+
+function createMarkup() {
+  return {
+      __html: 'First &middot; second'
+  }
+}
+
+function MyComponent() {
+  return (
+      <div dangeriouslySetInnerHTML={createMarkup()} />
+  )
+}
+
+@setTitle('Profile')
+export class MyComponent extends React.FC {
+  constructor(props) {
+      super(props)
+  }
+  render() {
+      
+  }
+}
+
+export const setTitle = (title) => (WrappedComponent) => {
+  return class extends React.FC (
+      componentDidMount() {
+          document.title = title;
+      }
+      render() { return (<WrappedComponent {...this.props} />) }
+  )
+}
+
+import React, { useState, useEffect } from 'react';
+export default function WindowDimension() {
+  const [{height, width}, setDimension] = useState({
+      height: window.innerHeight,
+      width: window.innerWidth
+  })
+
+  useEffect(() => {
+      function resizeWindow() {
+          setDimension({
+              height: window.innerHeight,
+              width: window.innerWidth
+          })
+      }
+      window.addEventListener('resize', resizeWindow)
+      return () => window.removeEventListener('resize', resizeWindow)
+  }, [])
+
+  return (
+      <span>height: {height} width: {width}</span>
+  )
+}
