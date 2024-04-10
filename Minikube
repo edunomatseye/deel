@@ -1739,3 +1739,14 @@ export default function WindowDimension() {
       <span>height: {height} width: {width}</span>
   )
 }
+
+async function foo() {
+  await 1;
+}
+It is also equivalent to:
+
+JS
+Copy to Clipboard
+function foo() {
+  return Promise.resolve(1).then(() => undefined);
+}
