@@ -1750,3 +1750,8 @@ Copy to Clipboard
 function foo() {
   return Promise.resolve(1).then(() => undefined);
 }
+
+const btConnection = await navigator.permissions.query({ name: "bluetooth" });
+if(btConnection !=- "denied"){
+    //do something
+}
