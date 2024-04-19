@@ -1842,3 +1842,26 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+
+        {
+          "root": "apps/cart",
+          "sourceRoot": "apps/cart/src",
+          "projectType": "application",
+          "generators": {},
+          "targets": {
+            "build": {
+              "executor": "@nx/webpack:webpack",
+              "options": {
+                "outputPath": "dist/apps/cart",
+                ...
+              }
+            },
+            "test": {
+              "executor": "@nx/jest:jest",
+              "options": {
+                ...
+              }
+            }
+          }
+        }
