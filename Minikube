@@ -1865,3 +1865,39 @@ jobs:
             }
           }
         }
+
+  interface Shape {
+      getArea(): number;
+  }
+  
+  class Rectangle implements Shape {
+      constructor(private width: number, private height: number) {}
+  
+      private static hello: string;
+  
+      getArea(): number {
+          return this.width * this.height;
+      }
+  }
+  
+  class Circle implements Shape {
+      constructor(private radius: number) {}
+  
+      getArea(): number {
+      return Math.PI * this.radius * this.radius;
+      }
+  }
+  
+  function calculateTotalArea(shapes: T[]): number {
+      let totalArea = 0;
+      for (let shape of shapes) {
+      totalArea += shape.getArea();
+      }
+      return totalArea;
+  }
+  
+  let rectangle = new Rectangle(5, 10);
+  let circle = new Circle(3);
+  
+  let totalArea = calculateTotalArea([rectangle, circle]);
+  console.log(totalArea); // Output: 104.71238898038469
