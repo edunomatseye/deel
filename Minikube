@@ -1901,3 +1901,34 @@ jobs:
   
   let totalArea = calculateTotalArea([rectangle, circle]);
   console.log(totalArea); // Output: 104.71238898038469
+
+
+  
+Old Transform:
+
+import React from "react";
+
+function App() {
+  return <h1>Good morning!!</h1>;
+}
+Now JSX transform convert the above code into regular JavaScript as below,
+
+import React from "react";
+
+function App() {
+  return React.createElement("h1", null, "Good morning!!");
+}
+New Transform:
+
+The new JSX transform doesn't require any React imports
+
+function App() {
+  return <h1>Good morning!!</h1>;
+}
+Under the hood JSX transform compiles to below code
+
+import { jsx as _jsx } from "react/jsx-runtime";
+
+function App() {
+  return _jsx("h1", { children: "Good morning!!" });
+}
