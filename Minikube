@@ -1966,3 +1966,35 @@ function MyComponent() {
 }
 
 export default MyComponent;
+
+
+import { Console, Effect } from 'effect'
+
+class CustomError {
+  readonly _tag = 'CustomError'
+  constructor(readonly value: number) {}
+}
+
+const maybeFail: Effect.Effect<
+  number,
+  CustomError // type safety
+> = Effect.sync(() => Math.random()).pipe(
+  Effect.andThen((value) =>
+    value > 0.5
+      ? Effect.fail(new CustomError(value))
+      : Effect.succeed(value),
+  ),
+)
+
+
+const main = maybeFail.pipe(
+  Effect.andThen((value) =>
+    Console.log(`Got value ${value}`),
+  ),
+  Effect.catchTag("CustomError", (error) =>
+    Console.error(`Oops! Got value ${error.value}`),
+  ),
+)
+
+
+Effect.runPromise(main) 
