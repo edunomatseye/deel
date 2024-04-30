@@ -1998,3 +1998,24 @@ const main = maybeFail.pipe(
 
 
 Effect.runPromise(main) 
+
+
+
+import { Effect, pipe } from 'effect';
+
+function getData(): Effect.Effect<never, FetchError| JSONError| ParseError, Data> {
+    return pipe(
+        Effect.tryPromise({
+            try: () => fetch(url),
+            catch: () => new FetchError()
+        }),
+        Effect.flatMap(res => Effect.tryPromise({
+            try: () => res.json(),
+            catch: () => new JSONError()
+        })),
+        Effect.flatMap(json => Effect.try({
+            try: () => dataSchema.parse(json),
+            catch: () => new ParseError()
+        }))
+    )
+}
