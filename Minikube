@@ -2033,3 +2033,5 @@ function useLogoutTimer() {
     }
   }, [userIsInactive]);
 }
+
+type Effect<Success, Error, Requirement> = (content: Context<Requirement>) => Success | Error
