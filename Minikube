@@ -2035,3 +2035,16 @@ function useLogoutTimer() {
 }
 
 type Effect<Success, Error, Requirement> = (content: Context<Requirement>) => Success | Error
+
+function SubmitButton() {
+  const navigation = useNavigation();
+  if (navigation.formMethod) {
+    console.log(navigation.formMethod); // post
+  }
+
+  return (
+    <Form method="POST">
+      <button>Submit</button>
+    </Form>
+  );
+}
