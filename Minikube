@@ -2048,3 +2048,23 @@ function SubmitButton() {
     </Form>
   );
 }
+
+class BarError {
+  readonly _tag = "BarError"
+}
+class FooError {
+  readonly _tag = "FooError"
+}
+
+const conditions [true, true, true] as [boolean, boolean, boolean];
+
+const Errors = Effect.gen(function* (_) {
+  if(conditions[0]) {
+      yield* _(Effect.fail(new BarError()))
+  } else if (conditions[1]) {
+      yield* _(Effect.fail(new FooError()))
+  } else if(conditions[2){
+      yield* _(Effect.die(Boom))
+  }
+  return "Success"
+})
