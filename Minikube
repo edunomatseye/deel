@@ -2068,3 +2068,36 @@ const Errors = Effect.gen(function* (_) {
   }
   return "Success"
 })
+
+class SimpleClass {
+  #data;
+    index;
+
+  constructor(data) {
+    this.#data = data;
+      this.index = 0
+  }
+
+next() {
+    
+    if (this.index < this.#data.length) {
+      return { value: this.#data[this.index++], done: false };
+    } else {
+      return { done: true };
+    }
+  }
+
+  [Symbol.iterator]() {
+    // Use a new index for each iterator. This makes multiple
+    // iterations over the iterable safe for non-trivial cases,
+    // such as use of break or nested looping over the same iterable.
+    
+    return this;
+  }
+}
+
+const simple = new SimpleClass([1, 2, 3, 4, 5]);
+
+for (const val of simple) {
+  console.log(val); // 1 2 3 4 5
+}
