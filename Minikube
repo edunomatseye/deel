@@ -2101,3 +2101,12 @@ const simple = new SimpleClass([1, 2, 3, 4, 5]);
 for (const val of simple) {
   console.log(val); // 1 2 3 4 5
 }
+
+// vitest.config.ts
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    globals: true,
+  },
+})
