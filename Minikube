@@ -2130,3 +2130,28 @@ function deepFreeze(object) {
   }
   return Object.freeze(object);
 }
+
+fetch(resource, options)
+.then(res => res.body)
+.then(readableStream => {
+    const reader = readableStream.getReader();
+    return new ReadableStream({
+        async start(controller) {
+            while(true) {
+                const {done, value} = reader.read();
+                //do alot until u break the circle
+                if(done) {
+                    break
+                }
+                controller.enqueue(value)
+            }
+            reader.releaseLock()
+            controller.close()
+        }
+    })
+})
+.then(rs => new Response(rs))
+.then(res => response.blob())
+.then(blob => URL.createObjectURL(blob))
+.then(url => image.src = url)
+.catch(console.error)
