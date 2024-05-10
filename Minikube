@@ -2120,3 +2120,13 @@ const inventory = [
 ];
 const result = Object.groupBy(inventory, ({ type }) => type);
 console.log(result)
+
+function deepFreeze(object) {
+  for(const key in object){
+      const value = object[key]
+      if((value && typeof value === 'object') || typeof value === 'function'){
+          deepFreeze(value)
+      }
+  }
+  return Object.freeze(object);
+}
