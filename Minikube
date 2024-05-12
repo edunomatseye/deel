@@ -2155,3 +2155,17 @@ fetch(resource, options)
 .then(blob => URL.createObjectURL(blob))
 .then(url => image.src = url)
 .catch(console.error)
+
+declare function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchParams, SetURLSearchParams];
+
+interface NavigateOpts {
+    replace?: boolean;
+    state?: any;
+    preventScrollReset?: boolean;
+}
+type ParamKeyValuePair = [string, string]
+type URLSearchParamsInit = string | Record<string, string | string[]> | ParamKeyValuePair[] | URLSearchParams
+type SetURLSearchParams = (
+    nextInit?: URLSearchParams | ((prev: URLSearchParams) => URLSearchParamsInit),
+    navigateOpts?: NavigateOpts
+) => void;
