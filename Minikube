@@ -2169,3 +2169,19 @@ type SetURLSearchParams = (
     nextInit?: URLSearchParams | ((prev: URLSearchParams) => URLSearchParamsInit),
     navigateOpts?: NavigateOpts
 ) => void;
+
+function concat(arrays: Uint8Array[]): Uint8Array {
+  if(!arrays.length) return new Uint8Array()
+  let arrLength =  arrays.reduce((acc, item) => {
+      return acc + item.length
+  }, 0);
+  const result = new Uint8Array(arrLength);
+  if(!arrays.length) return result;
+  
+  let length = 0;
+  for(let array of arrays){
+      result.set(array, length);
+      length += array.length;
+  }
+  return result;
+}
