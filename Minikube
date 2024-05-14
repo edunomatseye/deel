@@ -2212,3 +2212,20 @@ const api = ky.extend({
     }
 })
 const data = await api.get('https://example.com/api/users').json();
+
+// get readableStream from blob
+const readableStream = blob.stream();
+const stream = readableStream.getReader();
+
+while (true) {
+  // for each iteration: value is the next blob fragment
+  let { done, value } = await stream.read();
+  if (done) {
+    // no more data in the stream
+    console.log('all blob processed.');
+    break;
+  }
+
+   // do something with the data portion we've just read from the blob
+  console.log(value);
+}
