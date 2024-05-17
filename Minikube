@@ -2242,3 +2242,64 @@ ChildClass.prototype.prototypeMethod = function () {};
 
 console.log(Object.getOwnPropertyNames(new ChildClass()));
 // ["prop", "method"]
+
+const express = require('express');
+const redis = require('ioredis');
+
+const app = express();
+
+// Connect to Redis server
+const redisClient = redis.createClient();
+
+// Middleware for session management
+app.use(session({
+  store: new RedisStore({ client: redisClient }),
+  secret: 'your_secret_key', // Used for session data encryption
+  resave: false, // Don't resave session if not modified
+  saveUninitialized: false // Don't create session without data
+}));
+
+// Login route
+app.post('/login', (req, res) => {
+  // Validate login credentials
+  if (isValidLogin(req.body.username, req.body.password)) {
+    const userId = getUserId(req.body.username);
+    const sessionId = generateUniqueSessionId();
+
+    // Store session data in Redis
+    redisClient.hset(sessionId, 'userId', userId);
+    // Store other relevant information in the session hash
+
+    // Set session cookie
+    req.session.sessionId = sessionId;
+    res.cookie('sessionId', sessionId);
+    res.send('Login successful');
+  } else {
+    res.status(401).send('Invalid credentials');
+  }
+});
+
+// Protected route
+app.get('/protected', (req, res) => {
+  const sessionId = req.cookies.sessionId;
+
+  // Check if session ID exists in Redis
+  redisClient.hgetall(sessionId, (err, sessionData) => {
+    if (err || !sessionData) {
+      return res.status(401).send('Unauthorized');
+    }
+
+    const userId = sessionData.userId;
+
+    // Check user permissions based on userId (from session or database)
+    if (isUserAuthorized(userId, '/protected')) {
+      res.send('Welcome to the protected resource');
+    } else {
+      res.status(403).send('Forbidden');
+    }
+  });
+});
+
+// ... other routes
+
+app.listen(3000, () => console.log('Server listening on port 3000'));
