@@ -2303,3 +2303,30 @@ app.get('/protected', (req, res) => {
 // ... other routes
 
 app.listen(3000, () => console.log('Server listening on port 3000'));
+
+
+//const memoized = () => {}
+//const getTodos = memoized(fn)
+
+const memoized = (fn) => {
+  const cache = new Map();
+
+  return (...args) => {
+      const cacheKey = args.map(arg => arg.toString() + '+').join('');
+      if(cache.has(cacheKey)){
+          console.log('result coming from cache', cache)
+          return cache
+      }
+      const result = args.reduce((acc, curItem) => {
+          const res = fn(acc, curItem)
+          return res
+      }, 0)
+      cache.set(cacheKey, result);
+      console.log('Fresh result from server')
+      return cache.get(cacheKey)
+  }
+}
+const add = (a,b) => a+b;
+const getAdd = memoized(add);
+const adds = getAdd(1,3,4,5,2,5,2,5);
+console.log(adds)
