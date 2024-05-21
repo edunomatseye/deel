@@ -2330,3 +2330,39 @@ const add = (a,b) => a+b;
 const getAdd = memoized(add);
 const adds = getAdd(1,3,4,5,2,5,2,5);
 console.log(adds)
+
+//React server component making use of useTransition and startTransition hooks"
+
+
+function Comments({params}) {
+  const [errors, setErrors] = useState(null);
+  const [title, setTitle] = useState('');
+  const [isPending, startTransition] = useTransition();
+  
+  const getComments = async({id, title}) => {
+      'use server'
+      return db.prisma.comments({
+          where: {commentsid: id, title: title}
+      })
+  }
+  
+  const formActionComments = (formData) => {
+      const title = formData.get('title');
+      const id = params.get('id')
+      startTransition(async () => {
+          const [errors, comments] = await getComments({id, title});
+          if(errors){
+              setErrors(errors)
+          } else {
+              setTitle('')
+          }
+      })
+  }
+  
+  return(
+      <form action={formActionComments}>
+          <input type='text' name='title' />
+          <button type='submit' disabled={isPending}>Submit</button>
+      </form>
+   )
+  }
