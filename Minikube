@@ -2366,3 +2366,9 @@ function Comments({params}) {
       </form>
    )
   }
+
+  // myModule.js
+if (typeof fetch === "undefined") {
+  // We are running in Node.js; use node-fetch
+  globalThis.fetch = (await import("node-fetch")).default;
+}
