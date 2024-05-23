@@ -2372,3 +2372,30 @@ if (typeof fetch === "undefined") {
   // We are running in Node.js; use node-fetch
   globalThis.fetch = (await import("node-fetch")).default;
 }
+
+function ProjectsLayout() {
+  return (
+    <>
+      <Form method="post" />
+      <Outlet />
+    </>
+  );
+}
+
+function ProjectsPage() {
+  return <Form method="post" />;
+}
+
+<DataBrowserRouter>
+  <Route
+    path="/projects"
+    element={<ProjectsLayout />}
+    action={ProjectsLayout.action}
+  >
+    <Route
+      path=":projectId"
+      element={<ProjectsPage />}
+      action={ProjectsPage.action}
+    />
+  </Route>
+</DataBrowserRouter>;
