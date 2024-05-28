@@ -2420,3 +2420,18 @@ export function c(size: number) {
     return $;
   })[0];
 }
+
+import assert, { AssertionError } from 'node:assert';
+import express, { Request, Response } from 'express';
+
+export const getHandler = (req: Request, res: Response) => {
+    try {
+        assert.equal(Object.keys(req.params).length === 0, true, 'Expected no params');
+        assert.equal(Object.keys(req.body).length === 0, true, 'Expected no body');
+        return res.send({ data: { status: 'online' } })
+    } catch(e) {
+        if(e instanceof AssertionError) {
+            return res.send({ error: e.message })
+        }
+    }
+}
