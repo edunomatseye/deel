@@ -2447,3 +2447,63 @@ export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerF
     }
   }));
 }
+
+
+
+export async function getAccounts() {
+  const accountInfo = await getRawAccountInfo();
+
+  if(accountInfo.admin) {
+    return {
+      whatever: true,
+    }
+  } else if(!accountInfo.accounts.length) {
+    return missingAccountInfoPocket();
+  } else {
+    return accountInfo.accounts.map(account => {
+      return {
+        id: account.id,
+      }
+    })
+  }
+}
+
+import { expect, test } from 'vitest';
+import { getAccounts, missingAccountInfoPocket } from './your-file-path'; // Replace with actual path
+
+test('getAccounts: returns admin object when admin is true', async () => {
+  const mockGetRawAccountInfo = jest.fn().mockResolvedValue({ admin: true });
+  // Override the actual getRawAccountInfo function with our mock
+  jest.spyOn(window, 'getRawAccountInfo', 'get').mockImplementation(mockGetRawAccountInfo);
+
+  const accounts = await getAccounts();
+
+  expect(accounts).toEqual({ whatever: true });
+  expect(mockGetRawAccountInfo).toHaveBeenCalledTimes(1);
+});
+
+test('getAccounts: returns missing account info when accounts array is empty', async () => {
+  const mockGetRawAccountInfo = jest.fn().mockResolvedValue({ admin: false, accounts: [] });
+  jest.spyOn(window, 'getRawAccountInfo', 'get').mockImplementation(mockGetRawAccountInfo);
+
+  const accounts = await getAccounts();
+
+  expect(accounts).toBe(missingAccountInfoPocket()); // Assuming missingAccountInfoPocket returns an object
+  expect(mockGetRawAccountInfo).toHaveBeenCalledTimes(1);
+});
+
+test('getAccounts: returns accounts with id property when accounts exist', async () => {
+  const mockGetRawAccountInfo = jest.fn().mockResolvedValue({
+    admin: false,
+    accounts: [{ id: 1 }, { id: 2 }],
+  });
+  jest.spyOn(window, 'getRawAccountInfo', 'get').mockImplementation(mockGetRawAccountInfo);
+
+  const accounts = await getAccounts();
+
+  expect(accounts).toEqual([
+    { id: 1 },
+    { id: 2 },
+  ]);
+  expect(mockGetRawAccountInfo).toHaveBeenCalledTimes(1);
+});
