@@ -2435,3 +2435,15 @@ export const getHandler = (req: Request, res: Response) => {
         }
     }
 }
+
+export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+  const authToken = inject(AuthService).getAuthToken();
+  const newReq = req.clone({
+    headers: req.headers.set('X-Authentication', `Bearer ${authToken}`)
+  })
+  return next(newReq).pipe(tap(event => {
+    if (event.type === HttpEventType.Response) {
+      console.log(req.url, 'returned a response with status', event.status);
+    }
+  }));
+}
