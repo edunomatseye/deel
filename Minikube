@@ -2545,3 +2545,25 @@ const getTodo = (
     Http.client.fetchOk,
     Http.response.json,
   )      
+
+  fullname: 'Edun omatseye',
+  age: 34,
+  gender: ['Male', 'Female'],
+  isEmployed: true,
+  getDate: () => new Date()
+} as const;
+
+type sljfdsl = ((typeof person)[keyof typeof person])
+
+type Person = (typeof person)[keyof typeof person]
+
+export type Entity = 
+| {type: "user"; gender: 'Male'}
+| {type: "post"; gender: 'Female'}
+| {type: "comment";}
+
+type ksdfdsf = (keyof Entity);
+
+type EntityNameType = {
+  [EntityType in Entity['type']]: {type: EntityType} & Record<`${EntityType}Id`, string>
+}[Entity['type']]
