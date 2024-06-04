@@ -2567,3 +2567,19 @@ type ksdfdsf = (keyof Entity);
 type EntityNameType = {
   [EntityType in Entity['type']]: {type: EntityType} & Record<`${EntityType}Id`, string>
 }[Entity['type']]
+
+interface TableProps<TItem> {
+  items: TItem[];
+  renderProps: (props: TItem) => React.ReactNode;
+}
+function Table<TItem> (props: TableProps<TItem>) {
+  return null;
+}
+const Component = () => {
+  return (
+      <Table<{id: string}>
+          items={}
+          renderProps={}
+      ></Table>
+  )
+}
