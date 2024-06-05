@@ -2583,3 +2583,17 @@ const Component = () => {
       ></Table>
   )
 }
+
+export const createKeyRemoval = 
+<Key extends string>(keys: Key[]) => 
+<TObj extends {}>(obj: TObj) => {
+    return {} as Omit<TObj, Key>
+};
+const keyRemoval = createKeyRemoval(['a', 'b']);
+const leftoverKeys = keyRemoval({
+    a: 3,
+    b: 4,
+    c: '5',
+    d: 6,
+})
+leftoverKeys.c
