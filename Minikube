@@ -2609,3 +2609,9 @@ function HomePage() {
 }
  
 export default HomePage
+
+
+for await (const chunk of stream.values({ preventCancel: true })) {
+  // Do something with 'chunk'
+  break;
+}
