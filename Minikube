@@ -2631,3 +2631,15 @@ export default function useCounter() {
   const increment = React.useCallback(() => setCounter(count => count + 1), [])
   return {count, increment}
 }
+
+import { create } from 'zustand';
+import {persist, createJSONStorage} from 'zustand/middleware';
+
+const useFishStore = create(persist(set, get) => ({
+    fishes: 0,
+    addFish: () => set(state => ({fishes: state.fishes + 1})),
+    removeFish: () => set({fishes: get().fishes - 1})
+}), {
+    name: 'fish-storage',
+    storage: () => createJSONStorage(() => sessionStorage)
+}))
