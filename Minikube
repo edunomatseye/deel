@@ -2674,7 +2674,6 @@ http.get('/api/:id', ({request, params, cookie}) => {
 }
 
 import React, { useState, useContext, useCallback } from 'react'
-
 const CounterStepContext = React.createContext(1)
 
 export const CounterStepProvider = ({ step, children }) => (
