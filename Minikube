@@ -2702,3 +2702,10 @@ test('should use custom step when incrementing', () => {
 
   expect(result.current.count).toBe(2)
 })
+
+import { Effect } from "effect"
+ 
+const divide = (a: number, b: number): Effect.Effect<number, Error, never> =>
+  b === 0
+    ? Effect.fail(new Error("Cannot divide by zero"))
+    : Effect.succeed(a / b)
